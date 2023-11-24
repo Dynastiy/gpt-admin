@@ -46,7 +46,6 @@
       id="globalTable"
       :items="items"
       :fields="fields"
-      stacked="md"
       :filter="filter"
       :scrollable="scrollable"
       hover
@@ -192,6 +191,7 @@
           </div>
         </slot>
       </template>
+     
       <template #cell(ordered_datetime)="data">
         <slot name="ordered_datetime" :data="data">
           <div>
@@ -236,8 +236,13 @@
           variant="link"
           toggle-class="text-decoration-none tw-text-dark100"
           no-caret
-          v-if="row.item.status === 'pending'"
         >
+        <!-- <b-dropdown
+          variant="link"
+          toggle-class="text-decoration-none tw-text-dark100"
+          no-caret
+          v-if="row.item.status === 'pending'"
+        > -->
           <template #button-content>
             <!-- <b-icon icon="three-dots-vertical" class="dot"></b-icon> -->
             <span class="tw-text-dark100 tw-font-bold">

@@ -26,55 +26,49 @@ export default {
   components: { TableComponent },
   data() {
     return {
-      items: [],
+      // items: [],
       fields: [
         {
-          key: "id",
+          key: "transaction_id",
           label: "#",
-          formatter: (val) => {
-            let result = val.slice(0, 5);
-            return `#${result}`;
-          },
+          // formatter: (val) => {
+          //   let result = val.slice(0, 5);
+          //   return `#${result}`;
+          // },
         },
 
         {
-          key: "total_quantity",
-          label: "Order Qty",
-          formatter: (item) => {
-            return item ? Number(item).toLocaleString() : "0";
-          },
+          key: "amount_formatted_disp",
+          label: "Amount",
+          // formatter: (item) => {
+          //   return item ? Number(item).toLocaleString() : "0";
+          // },
         },
 
         {
-          key: "total_amount",
-          label: "Total Amount",
-          formatter: (item) => {
-            return item
-              ? Number(item).toLocaleString("en-US", {
-                  style: "currency",
-                  currency: "NGN",
-                })
-              : "NGN 0.00";
-          },
+          key: "post_date",
+          label: "Date",
+          // formatter: (item) => {
+          //   return item
+          //     ? Number(item).toLocaleString("en-US", {
+          //         style: "currency",
+          //         currency: "NGN",
+          //       })
+          //     : "NGN 0.00";
+          // },
         },
 
         {
-          key: "user.username",
-          label: "Customer",
+          key: "txn_type",
+          label: "Transaction Type",
         },
 
         {
-          key: "item-status",
+          key: "status",
           label: "Status",
         },
-
-        {
-          key: "created_at",
-          label: "Date",
-        },
-
+        
         { key: "actions", label: "" },
-
         { key: "dots", label: "" },
       ],
       busy: false,
@@ -137,7 +131,15 @@ export default {
 
   beforeMount() {
     // this.list();
+    this.$store.dispatch('user/list') 
   },
+
+  computed: {
+    items() {
+      let transactions = this.$store.getters['user/getTransactions']
+      return transactions
+    }
+  }
 };
 </script>
 

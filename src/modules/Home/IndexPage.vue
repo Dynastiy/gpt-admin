@@ -73,52 +73,47 @@ export default {
       ],
       // items: [],
       fields: [
-        // {
-        //   key: "id",
-        //   label: "#",
-        //   formatter: (val) => {
-        //     let result = val.slice(0, 5);
-        //     return `#${result}`;
-        //   },
-        // },
+        {
+          key: "transaction_id",
+          label: "#",
+          // formatter: (val) => {
+          //   let result = val.slice(0, 5);
+          //   return `#${result}`;
+          // },
+        },
 
-        // {
-        //   key: "total_quantity",
-        //   label: "Order Qty",
-        //   formatter: (item) => {
-        //     return item ? Number(item).toLocaleString() : "0";
-        //   },
-        // },
+        {
+          key: "amount_formatted_disp",
+          label: "Amount",
+          // formatter: (item) => {
+          //   return item ? Number(item).toLocaleString() : "0";
+          // },
+        },
 
-        // {
-        //   key: "total_amount",
-        //   label: "Total Amount",
-        //   formatter: (item) => {
-        //     return item
-        //       ? Number(item).toLocaleString("en-US", {
-        //           style: "currency",
-        //           currency: "NGN",
-        //         })
-        //       : "NGN 0.00";
-        //   },
-        // },
+        {
+          key: "post_date",
+          label: "Date",
+          // formatter: (item) => {
+          //   return item
+          //     ? Number(item).toLocaleString("en-US", {
+          //         style: "currency",
+          //         currency: "NGN",
+          //       })
+          //     : "NGN 0.00";
+          // },
+        },
 
-        // {
-        //   key: "user.username",
-        //   label: "Customer",
-        // },
+        {
+          key: "txn_type",
+          label: "Transaction Type",
+        },
 
-        // {
-        //   key: "item-status",
-        //   label: "Status",
-        // },
+        {
+          key: "status",
+          label: "Status",
+        },
 
-        // {
-        //   key: "created_at",
-        //   label: "Date",
-        // },
-
-        // { key: "actions", label: "" },
+        { key: "actions", label: "" },
       ],
       busy: false,
       loading: false,
