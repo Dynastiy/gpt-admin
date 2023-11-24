@@ -120,25 +120,10 @@ export default {
     };
   },
   methods: {
-    // getAnalytics() {
-    //   this.loading = true;
-    //   this.$request(`admin/products/dashboard`)
-    //     .then((res) => {
-    //       let resPayload = res.data;
-    //       this.analytics = resPayload;
-    //       this.loading = false;
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //       this.loading = false;
-    //     });
-    // },
-
     getPercentage(value1, value2) {
       let perc = (value1 / value2) * 100;
       return perc;
     },
-
     viewOrder(e) {
       this.$router.push(`/transaction/${e.transaction_id}`);
     },
@@ -146,7 +131,6 @@ export default {
   },
 
   beforeMount() {
-    // this.getAnalytics();
     this.$store.dispatch('user/list') 
   },
 

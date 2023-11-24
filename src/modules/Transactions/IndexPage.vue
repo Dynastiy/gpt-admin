@@ -6,9 +6,9 @@
       :fields="fields"
       :busy="busy"
       :dropdownItem="['approve', 'decline']"
-      @approve="updateStatus($event, 'completed')"
-      @decline="updateStatus($event, 'canceled')"
-      @view="viewOrder"
+      @approve="updateTxnStatus($event, 'approve')"
+      @decline="updateTxnStatus($event, 'decline')"
+      @view="viewTxn"
       :disableEditAction="true"
       :disableDeleteAction="true"
       :currentPage="currentPage"
@@ -83,54 +83,21 @@ export default {
   },
 
   methods: {
-    // list(page = 1) {
-    //   this.busy = true;
-    //   console.log(page, "kkk");
-    //   this.$request.get(`admin/orders?page=` + page)
-    //     .then((res) => {
-    //       let resPayload = res.data;
-    //       this.items = resPayload.data;
-    //       this.totalRows = resPayload.total;
-    //       this.showFrom = resPayload.from;
-    //       this.showTo = resPayload.to;
-    //       this.totalRecords = resPayload.total;
-    //       this.currentPage = resPayload.current_page;
-    //       this.perPage = resPayload.per_page;
-    //       this.pages = resPayload.last_page
-    //       console.log(res.data);
-    //       this.busy = false;
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //       this.busy = false;
-    //     });
-    // },
-
-    viewOrder(e) {
+    viewTxn(e) {
       this.$router.push(`/transaction/${e.transaction_id}`);
     },
 
-    // updateStatus(e, value) {
-    //   let payload = {
-    //     status: value
-    //   }
-    //   this.$request.post(`admin/orders/update-status/${e.id}`, payload)
-    //     .then((res) => {
-    //       console.log(res);
-    //       this.list()
-    //       this.busy = false;
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //       this.busy = false;
-    //     });
-    //   console.log(e, value);
-    // },
+    updateTxnStatus(e, value) {
+      let payload = {
+        actioon: value,
+        id: e.transaction_id
+      }
+      this.$store.dispatch('user/updateStatus', payload)
+    },
 
   },
 
   beforeMount() {
-    // this.list();
     this.$store.dispatch('user/list') 
   },
 

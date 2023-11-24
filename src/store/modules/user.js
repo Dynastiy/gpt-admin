@@ -2,7 +2,9 @@
 // import Vue from "vue";
 import $request from "@/https/axios";
 
-// import toastify from "toastify-js";
+import $middleware from "@/https/middleware";
+
+import toastify from "toastify-js";
 
 const getDefaultState = () => {
   return {
@@ -47,6 +49,38 @@ export default {
         console.log(err);
     })
     },
+
+    // Change Status
+    updateStatus({ dispatch }, payload) {
+        $middleware.put(`/payments/${payload.txn_id}/${payload.action}`)
+        .then((res)=> {
+            console.log(res);
+            toastify({
+                text: `${res.data.message}`,
+                className: "info",
+                position: "center",
+                style: {
+                  background: "green",
+                  fontSize: "12px",
+                  borderRadius: "5px",
+                },
+              }).showToast();
+            dispatch('list')
+        })
+        .catch((err)=>{
+            console.log(err);
+            toastify({
+                text: `${err.data.message}`,
+                className: "info",
+                position: "center",
+                style: {
+                  background: "green",
+                  fontSize: "12px",
+                  borderRadius: "5px",
+                },
+              }).showToast();
+        })
+        },
 
   },
 };
