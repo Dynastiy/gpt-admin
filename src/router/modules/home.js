@@ -1,7 +1,7 @@
 import IndexViewVue from "@/modules/Home/IndexPage.vue";
 
-import Orders from "@/modules/Orders/IndexPage.vue";
-import OrderDetails from "@/modules/Orders/uuid/_uuid.vue";
+import Transactions from "@/modules/Transactions/IndexPage.vue";
+import TransactionDetails from "@/modules/Transactions/uuid/_uuid.vue";
 
 
 const router = [
@@ -20,7 +20,7 @@ const router = [
   {
     path: "/transactions",
     name: "transaction",
-    component: Orders,
+    component: Transactions,
     meta: {
       layout: "AppDashboardLayout",
       parent: "transactions",
@@ -32,11 +32,11 @@ const router = [
   {
     path: "/transaction/:id",
     name: "transaction-details",
-    component: OrderDetails,
+    component: TransactionDetails,
     meta: {
       layout: "AppDashboardLayout",
       parent: "transactions",
-      name: "home",
+      name: "Details",
       requiresAuth: true
     },
   },

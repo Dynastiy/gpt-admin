@@ -107,7 +107,7 @@ export default {
     // },
 
     viewOrder(e) {
-      this.$router.push(`/order/${e.id}`);
+      this.$router.push(`/transaction/${e.transaction_id}`);
     },
 
     // updateStatus(e, value) {
