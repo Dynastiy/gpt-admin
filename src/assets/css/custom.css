@@ -235,7 +235,15 @@ form label {
 .banned,
 .out-of-stock,
 .not-registered,
-.inactive {
+.inactive,
+
+.admin_canceled,
+.admin_deactivated,
+.admin_rejected,
+.admin_banned,
+.admin_out-of-stock,
+.admin_not-registered,
+.admin_inactive {
     background-color: red;
 }
 
@@ -245,11 +253,19 @@ form label {
 .in-stock,
 .registered,
 .active, 
-.success {
+.success
+.admin_completed,
+.admin_approved,
+.admin_activated,
+.admin_in-stock,
+.admin_registered,
+.admin_active, 
+.admin_success {
     background-color: green;
 }
 
-.pending {
+.pending,
+.admin_pending {
     background-color: orange;
 }
 

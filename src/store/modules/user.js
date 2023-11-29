@@ -40,10 +40,10 @@ export default {
   actions: {
     // List Transactions
     list({ commit }) {
-    $request.get('/transactions')
+    $request.get('/transactions?meta_key=transaction_type_category&meta_value=withdrawal&order=ASC&pageno=1&&metas_to_retrieve=transaction_type_category,balance_before,balance_after,transaction_approval_status')
     .then((res)=> {
         console.log(res);
-        commit('SET_TRANSACTIONS', res.data)
+        commit('SET_TRANSACTIONS', res.data.data)
     })
     .catch((err)=>{
         console.log(err);

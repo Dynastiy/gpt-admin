@@ -41,7 +41,7 @@
               </span>
             </div>
           </span>
-          <span role="button" @click="drawer = !drawer">
+          <span role="button" @click="drawer = !drawer" class="lg:tw-hidden md:tw-hidden tw-block">
               <i-icon icon="grommet-icons:menu" width="25px" />
             </span>
         </div>

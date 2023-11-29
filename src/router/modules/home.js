@@ -6,7 +6,7 @@ import TransactionDetails from "@/modules/Transactions/uuid/_uuid.vue";
 
 const router = [
   {
-    path: "/",
+    path: "/analytics",
     name: "analytics",
     component: IndexViewVue,
     meta: {
@@ -18,7 +18,7 @@ const router = [
   },
 
   {
-    path: "/transactions",
+    path: "/",
     name: "transaction",
     component: Transactions,
     meta: {

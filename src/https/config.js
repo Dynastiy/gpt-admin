@@ -11,6 +11,7 @@ const config = {
     apiKey: process.env.VUE_APP_API_KEY,
   
     apiUrl: process.env.VUE_APP_API_URL,
+    apiDomain: process.env.VUE_APP_API_DOMAIN,
     imgUrl: process.env.VUE_APP_IMG_URL,
     middlewareUrl: process.env.VUE_APP_MIDDLEWARE_API_URL,
     domain: process.env.VUE_APP_DOMAIN,

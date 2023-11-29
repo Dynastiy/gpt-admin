@@ -1,6 +1,6 @@
 <template>
   <div class="tw-bg-white tw-p-6">
-    <h4 class="tw-font-semibold">All Transactions</h4>
+    <h4 class="tw-font-bold tw-mb-6">All Transactions</h4>
     <table-component
       :items="items"
       :fields="fields"
@@ -11,6 +11,7 @@
       @view="viewTxn"
       :disableEditAction="true"
       :disableDeleteAction="true"
+      :disableViewAction="true"
       :currentPage="currentPage"
       :totalRows="totalRows"
       :perPage="perPage"
@@ -38,7 +39,7 @@ export default {
         },
 
         {
-          key: "amount_formatted_disp",
+          key: "amount_formatted",
           label: "Amount",
           // formatter: (item) => {
           //   return item ? Number(item).toLocaleString() : "0";
@@ -46,7 +47,7 @@ export default {
         },
 
         {
-          key: "post_date",
+          key: "date_time",
           label: "Date",
           // formatter: (item) => {
           //   return item
@@ -59,7 +60,7 @@ export default {
         },
 
         {
-          key: "txn_type",
+          key: "transaction_type",
           label: "Transaction Type",
         },
 
@@ -94,7 +95,6 @@ export default {
       }
       this.$store.dispatch('user/updateStatus', payload)
     },
-
   },
 
   beforeMount() {

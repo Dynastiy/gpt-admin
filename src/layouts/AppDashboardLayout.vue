@@ -24,13 +24,13 @@ export default {
   data(){
     return {
       menu: [
-        {
-          title: "Dashboard",
-          icon: "carbon:analytics",
-          parent: "analytics",
-          url: "/",
-          hasChildren: false,
-        },
+        // {
+        //   title: "Dashboard",
+        //   icon: "carbon:analytics",
+        //   parent: "analytics",
+        //   url: "/",
+        //   hasChildren: false,
+        // },
 
         {
           title: "Transactions",

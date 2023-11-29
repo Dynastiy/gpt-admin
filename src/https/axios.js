@@ -7,7 +7,7 @@ import config from "./config";
 // import router from "./router";
 
 const $axios = axios.create({
-  baseURL: config.apiUrl, // Set api base url from .env
+  baseURL: config.apiDomain, // Set api base url from .env
   // timeout: 30000, // default is `0` millisecods (no timeout)
   headers: {
     // Accept: "application/json",

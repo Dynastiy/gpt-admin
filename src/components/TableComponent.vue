@@ -131,32 +131,29 @@
       <template #cell(edit)="item">
         <slot name="edit" :data="item"></slot>
       </template>
+
       <template #cell(category_name)="data">
         <span class="tw-capitalize">{{ data.item.category_name }}</span>
       </template>
+
       <template #cell(name)="data">
         <span class="tw-capitalize">{{ data.item.name }}</span>
       </template>
-      <template #cell(item-status)="data">
-        <span class="tw-flex tw-items-center tw-gap-1">
-          <span class="status" :class="data.item.status"></span>
-          <span class="tw-text-[12px] tw-capitalize">{{
-            data.item.status
-          }}</span>
-        </span>
-      </template>
-      <!-- <template #cell(item-availability)="data">
-        
+
+      <template #cell(status)="data">
         <span class="tw-flex tw-items-center tw-gap-1">
           <span
-            class="tw-text-8 status"
-            :class="data.item.availability === 'yes' ? 'active' : 'inactive'"
+            class="status"
+            :class="data.item.metas.transaction_approval_status"
           ></span>
-          <span class="tw-text-[12px] tw-capitalize">{{
-            data.item.availability === "yes" ? "available" : "unavailable"
-          }}</span>
+          <span
+            class="tw-text-[12px]"
+            >{{
+              data.item.metas.transaction_approval_status.split("_").join(" ")
+            }}</span
+          >
         </span>
-      </template> -->
+      </template>
 
       <template #cell(availability)="data">
         <span class="tw-flex tw-items-center tw-gap-1">
@@ -191,7 +188,7 @@
           </div>
         </slot>
       </template>
-     
+
       <template #cell(ordered_datetime)="data">
         <slot name="ordered_datetime" :data="data">
           <div>
@@ -237,7 +234,7 @@
           toggle-class="text-decoration-none tw-text-dark100"
           no-caret
         >
-        <!-- <b-dropdown
+          <!-- <b-dropdown
           variant="link"
           toggle-class="text-decoration-none tw-text-dark100"
           no-caret
@@ -307,7 +304,11 @@
       <template #cell(product_img)="data">
         <img
           class="tw-w-[30px] tw-h-[30px] tw-p-[2px] tw-border tw-border-primary tw-object-cover tw-object-center tw-rounded-full"
-          :src="data.item.images.length > 0 ? `${data.item.images[0].url}` : require('@/assets/img/peppi-icon.png')"
+          :src="
+            data.item.images.length > 0
+              ? `${data.item.images[0].url}`
+              : require('@/assets/img/peppi-icon.png')
+          "
           :alt="data.item.name"
         />
       </template>
