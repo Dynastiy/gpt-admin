@@ -34,14 +34,14 @@ export default {
 
         {
           title: "Transactions",
-          icon: "carbon:ibm-watson-orders",
+          icon: "ep:list",
           parent: "transactions",
           url: "/transactions",
           hasChildren: true,
           children: [
             {
               title: "Withdrawal",
-              icon: "carbon:ibm-watson-orders",
+              icon: "uil:money-withdrawal",
               parent: "transactions",
               url: "/",
               subItem: "withdrawals",
@@ -49,7 +49,7 @@ export default {
             },
             {
               title: "Deposit",
-              icon: "carbon:ibm-watson-orders",
+              icon: "streamline:money-atm-card-2-deposit-money-payment-finance-atm-withdraw",
               parent: "transactions",
               url: "/deposit",
               subItem: "deposit",
@@ -57,7 +57,7 @@ export default {
             },
             {
               title: "Staking Interest",
-              icon: "carbon:ibm-watson-orders",
+              icon: "bx:lock",
               parent: "transactions",
               url: "/staking-interest",
               subItem: "staking-interest",
@@ -65,7 +65,7 @@ export default {
             },
             {
               title: "Referral Bonus",
-              icon: "carbon:ibm-watson-orders",
+              icon: "ri:share-line",
               parent: "transactions",
               url: "/referral-bonus",
               subItem: "referral-bonus",
