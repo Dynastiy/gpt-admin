@@ -11,12 +11,10 @@
       :disableEditAction="true"
       :disableDeleteAction="true"
       :disableViewAction="true"
-      :currentPage="currentPage"
-      :totalRows="totalRows"
-      :perPage="perPage"
-      :pages="pages"
+      :showBaseCount="false"
     >
     </table-component>
+
     <div class="tw-flex tw-justify-between tw-mt-3">
       <button v-if="page > 1" class="gpt-btn gpt-primary" @click="changePage('prev')">
         previous {{ +page - 1 }}
@@ -75,34 +73,15 @@ export default {
 
         // { key: "actions", label: "" },
       ],
-      totalRows: null,
-      currentPage: null,
-      perPage: null,
-      showFrom: null,
-      showTo: null,
-      totalRecords: null,
-      pages: null,
+      per_page: 10,
+      order: "ASC",
       page: 1
     };
   },
 
   methods: {
-    viewTxn(e) {
-      this.$router.push(`/transaction/${e.transaction_id}`);
-    },
-
     getTransactions() {
-      this.$store.dispatch("user/list", {page: this.page, txn_type: this.txn_type});
-    },
-
-    updateTxnStatus(e, value) {
-      let payload = {
-        action: value,
-        id: e.transaction_id,
-        page: this.page,
-        txn_type: this.txn_type
-      };
-      this.$store.dispatch("user/updateStatus",  payload );
+      this.$store.dispatch("user/list", { meta_key:"transaction_type_category", page: this.page, txn_type: this.txn_type, per_page: this.per_page, order: this._order});
     },
 
     changePage(value) {

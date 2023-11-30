@@ -46,15 +46,14 @@ export default {
   },
   actions: {
     // List Transactions
-    list({ commit }, { page, txn_type }) {
+    list({ commit }, { meta_key, page, txn_type, per_page, order }) {
       commit("SET_LOADING", true);
       $request
         .get(
-          `/transactions?meta_key=transaction_type_category&meta_value=${txn_type}&order=ASC&pageno=${page}&&metas_to_retrieve=transaction_type_category,balance_before,balance_after,transaction_approval_status`
+          `/transactions?meta_key=${meta_key}&meta_value=${txn_type}&order=${order}&pageno=${page}&posts_per_page=${per_page}&&metas_to_retrieve=transaction_type_category,balance_before,balance_after,transaction_approval_status`
         )
         .then((res) => {
           console.log(res);
-
           commit("SET_TRANSACTIONS", res.data.data);
         })
         .catch((err) => {

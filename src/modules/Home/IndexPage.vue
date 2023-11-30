@@ -71,7 +71,6 @@ export default {
       "all", "pending", "approved",
         "declined",
       ],
-      // items: [],
       fields: [
         {
           key: "transaction_id",

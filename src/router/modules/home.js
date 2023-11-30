@@ -28,7 +28,7 @@ const router = [
       parent: "transactions",
       name: "home",
       header: "Withdrawal Requests",
-      filter: "withdrawal",
+      filter: "blockchain_withdrawal",
       subName: "withdrawals",
       requiresAuth: true
     },
