@@ -236,7 +236,7 @@ form label {
 .out-of-stock,
 .not-registered,
 .inactive,
-
+.admin_declined,
 .admin_canceled,
 .admin_deactivated,
 .admin_rejected,

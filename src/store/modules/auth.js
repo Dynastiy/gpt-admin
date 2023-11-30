@@ -121,8 +121,6 @@ export default {
         let responsePayload = res.data;
         console.log(responsePayload);
         localStorage.setItem("token", responsePayload.data.access_token);
-
-
         toastify({
           text: `Welcome back`,
           className: "info",

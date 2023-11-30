@@ -99,8 +99,10 @@ export default {
       let payload = {
         action: value,
         id: e.transaction_id,
+        page: this.page,
+        txn_type: this.txn_type
       };
-      this.$store.dispatch("user/updateStatus", payload);
+      this.$store.dispatch("user/updateStatus",  payload );
     },
 
     changePage(value) {

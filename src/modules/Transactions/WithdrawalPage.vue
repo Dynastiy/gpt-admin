@@ -42,31 +42,16 @@
           {
             key: "transaction_id",
             label: "#",
-            // formatter: (val) => {
-            //   let result = val.slice(0, 5);
-            //   return `#${result}`;
-            // },
           },
   
           {
             key: "amount_formatted",
             label: "Amount",
-            // formatter: (item) => {
-            //   return item ? Number(item).toLocaleString() : "0";
-            // },
           },
   
           {
             key: "date_time",
             label: "Date",
-            // formatter: (item) => {
-            //   return item
-            //     ? Number(item).toLocaleString("en-US", {
-            //         style: "currency",
-            //         currency: "NGN",
-            //       })
-            //     : "NGN 0.00";
-            // },
           },
   
           {
@@ -99,13 +84,15 @@
       },
   
       getTransactions() {
-        this.$store.dispatch("user/list", {page: this.page, txn_type: this.txn_type});
+        this.$store.dispatch("user/list", { page: this.page, txn_type: this.txn_type });
       },
   
       updateTxnStatus(e, value) {
         let payload = {
           action: value,
           id: e.transaction_id,
+          page: this.page,
+          txn_type: this.txn_type
         };
         this.$store.dispatch("user/updateStatus", payload);
       },

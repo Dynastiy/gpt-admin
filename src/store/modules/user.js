@@ -79,7 +79,7 @@ export default {
               borderRadius: "5px",
             },
           }).showToast();
-          dispatch("list");
+          dispatch("list", { page: payload.page, txn_type: payload.txn_type });
         })
         .catch((err) => {
           console.log(err);

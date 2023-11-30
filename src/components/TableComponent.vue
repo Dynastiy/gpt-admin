@@ -228,11 +228,13 @@
           {{ data.value }}
         </slot>
       </template>
+
       <template #cell(dots)="row">
         <b-dropdown
           variant="link"
           toggle-class="text-decoration-none tw-text-dark100"
           no-caret
+          v-if="row.item.metas.transaction_approval_status === 'admin_pending'"
         >
           <!-- <b-dropdown
           variant="link"
