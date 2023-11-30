@@ -55,6 +55,11 @@ export default {
         },
 
         {
+          key: "user_id",
+          label: "User ID",
+        },
+
+        {
           key: "amount_formatted",
           label: "Amount",
         },

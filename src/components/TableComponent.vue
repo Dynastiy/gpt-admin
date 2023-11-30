@@ -132,6 +132,27 @@
         <slot name="edit" :data="item"></slot>
       </template>
 
+      <template #cell(transaction_id)="data">
+        <el-popover placement="bottom-end" width="200" trigger="hover">
+          <div>{{ data.item.request_id }}</div>
+          <span slot="reference" role="button">
+            {{ data.item.transaction_id }}
+          </span>
+        </el-popover>
+      </template>
+
+      <template #cell(user_id)="data">
+        <el-popover placement="bottom-end" width="200" trigger="hover">
+          <div class="tw-flex tw-flex-col tw-gap-2">
+            <span>Balance Before: {{ data.item.metas.balance_before }} USDT</span>
+            <span>Balance After: {{ data.item.metas.balance_after }} USDT</span>
+          </div>
+          <span slot="reference" role="button">
+            {{ data.item.user_id }}
+          </span>
+        </el-popover>
+      </template>
+
       <template #cell(category_name)="data">
         <span class="tw-capitalize">{{ data.item.category_name }}</span>
       </template>
@@ -146,12 +167,9 @@
             class="status"
             :class="data.item.metas.transaction_approval_status"
           ></span>
-          <span
-            class="tw-text-[12px]"
-            >{{
-              data.item.metas.transaction_approval_status.split("_").join(" ")
-            }}</span
-          >
+          <span class="tw-text-[12px]">{{
+            data.item.metas.transaction_approval_status.split("_").join(" ")
+          }}</span>
         </span>
       </template>
 
