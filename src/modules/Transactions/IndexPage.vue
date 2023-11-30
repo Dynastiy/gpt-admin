@@ -1,11 +1,10 @@
 <template>
   <div class="tw-bg-white tw-p-6">
-    <h4 class="tw-font-bold tw-mb-6">All Transactions</h4>
+    <h4 class="tw-font-bold tw-mb-6">{{ header }}</h4>
     <table-component
       :items="items"
       :fields="fields"
       :busy="busy"
-      :dropdownItem="['approve', 'decline']"
       @approve="updateTxnStatus($event, 'approve')"
       @decline="updateTxnStatus($event, 'decline')"
       @view="viewTxn"
@@ -18,6 +17,16 @@
       :pages="pages"
     >
     </table-component>
+    <div class="tw-flex tw-justify-between tw-mt-3">
+      <button v-if="page > 1" class="gpt-btn gpt-primary" @click="changePage('prev')">
+        previous {{ +page - 1 }}
+      </button>
+      <div class="tw-self-end">
+        <button class="gpt-btn gpt-primary" @click="changePage('next')">
+          next {{ +page + 1 }}
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -64,15 +73,8 @@ export default {
           label: "Transaction Type",
         },
 
-        {
-          key: "status",
-          label: "Status",
-        },
-        
-        { key: "actions", label: "" },
-        { key: "dots", label: "" },
+        // { key: "actions", label: "" },
       ],
-      busy: false,
       totalRows: null,
       currentPage: null,
       perPage: null,
@@ -80,6 +82,7 @@ export default {
       showTo: null,
       totalRecords: null,
       pages: null,
+      page: 1
     };
   },
 
@@ -88,25 +91,57 @@ export default {
       this.$router.push(`/transaction/${e.transaction_id}`);
     },
 
+    getTransactions() {
+      this.$store.dispatch("user/list", {page: this.page, txn_type: this.txn_type});
+    },
+
     updateTxnStatus(e, value) {
       let payload = {
-        actioon: value,
-        id: e.transaction_id
+        action: value,
+        id: e.transaction_id,
+      };
+      this.$store.dispatch("user/updateStatus", payload);
+    },
+
+    changePage(value) {
+      if (value === "prev") {
+        this.page--;
+      } else {
+        this.page++;
       }
-      this.$store.dispatch('user/updateStatus', payload)
     },
   },
 
   beforeMount() {
-    this.$store.dispatch('user/list') 
+    this.getTransactions();
+  },
+
+  watch: {
+    page(oldVal, newVal) {
+      if (oldVal !== newVal) {
+        this.getTransactions();
+      }
+    },
   },
 
   computed: {
     items() {
-      let transactions = this.$store.getters['user/getTransactions']
-      return transactions
+      let transactions = this.$store.getters["user/getTransactions"];
+      return transactions;
+    },
+
+    busy(){
+      return this.$store.getters["user/getLoading"]
+    },
+
+    txn_type(){
+      return this.$route.meta.filter
+    },
+
+    header(){
+      return this.$route.meta.header
     }
-  }
+  },
 };
 </script>
 

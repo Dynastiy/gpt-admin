@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import Vue from "vue";
-import $request from "@/https/axios";
+import $request from "@/https/request";
 // import Cookies from "js-cookie";
 import config from "@/https/config.js";
 import router from "@/router";
@@ -117,43 +117,26 @@ export default {
       NProgress.start();
       commit("SET_LOADING", true);
       try {
-        let res = await $request.post(`auth/signin`, payload);
-        console.log(res);
+        let res = await $request.post(`users/login`, payload);
         let responsePayload = res.data;
-        if(responsePayload.user.role !== 'admin') {
-          commit("SET_VALIDATION_ERRORS", "Access Denied");
-          toastify({
-            text: `Access Denied`,
-            className: "info",
-            position: "center",
-            style: {
-              background: "red",
-              fontSize: "12px",
-              borderRadius: "5px",
-            },
-          }).showToast();
-        }
-        else {
-          router.push('/')
-          localStorage.setItem("token", res.data.token);
-          commit("SET_USER", responsePayload.user);
-          toastify({
-            text: `Welcome back`,
-            className: "info",
-            position: "center",
-            style: {
-              background: "green",
-              fontSize: "12px",
-              borderRadius: "5px",
-            },
-          }).showToast();
-        }
-        commit("SET_SUCCESS", "Logged In");
+        console.log(responsePayload);
+        localStorage.setItem("token", responsePayload.data.access_token);
 
+
+        toastify({
+          text: `Welcome back`,
+          className: "info",
+          position: "center",
+          style: {
+            background: "green",
+            fontSize: "12px",
+            borderRadius: "5px",
+          },
+        }).showToast();
+
+        router.push("/");
         // Check redirect URL
-        
 
-       
         return res;
       } catch (error) {
         if (error.data) {
@@ -174,48 +157,48 @@ export default {
       }
     },
 
-     // Login request
-     async registerUser({ commit }, payload) {
-        NProgress.start();
-        commit("SET_LOADING", true);
-        try {
-          let res = await $request.post(`auth/sign-up`, payload);
-          Cookies.set("token", res.data.access_token);
-          commit("SET_SUCCESS", "Logged In");
-          toastify({
-            text: `Account Created`,
-            className: "info",
-            style: {
-              background: "green",
-              fontSize: "12px",
-              borderRadius: "5px",
-            },
-          }).showToast();
-          dipatch("loginUser", payload)
-          return res;
-        } catch (error) {
-          console.log(error.data);
-          if (error.data) {
-            let errorPayload = error.data;
-            if (errorPayload.message) {
-              commit("SET_ERROR", errorPayload.message);
-              if (errorPayload.errors) {
-                console.log(errorPayload.errors);
-                commit("SET_VALIDATION_ERRORS", errorPayload.errors);
-              }
-              return;
+    // Login request
+    async registerUser({ commit }, payload) {
+      NProgress.start();
+      commit("SET_LOADING", true);
+      try {
+        let res = await $request.post(`auth/sign-up`, payload);
+        Cookies.set("token", res.data.access_token);
+        commit("SET_SUCCESS", "Logged In");
+        toastify({
+          text: `Account Created`,
+          className: "info",
+          style: {
+            background: "green",
+            fontSize: "12px",
+            borderRadius: "5px",
+          },
+        }).showToast();
+        dipatch("loginUser", payload);
+        return res;
+      } catch (error) {
+        console.log(error.data);
+        if (error.data) {
+          let errorPayload = error.data;
+          if (errorPayload.message) {
+            commit("SET_ERROR", errorPayload.message);
+            if (errorPayload.errors) {
+              console.log(errorPayload.errors);
+              commit("SET_VALIDATION_ERRORS", errorPayload.errors);
             }
+            return;
           }
-          commit("SET_ERROR", "Internal connection error, please try again.");
-          return error.data;
-        } finally {
-          NProgress.done();
         }
-      },
+        commit("SET_ERROR", "Internal connection error, please try again.");
+        return error.data;
+      } finally {
+        NProgress.done();
+      }
+    },
 
-      // Logout Request
-      logout({ commit }) {
-        commit("LOGOUT");
-      },
+    // Logout Request
+    logout({ commit }) {
+      commit("LOGOUT");
+    },
   },
 };

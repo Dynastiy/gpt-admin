@@ -64,7 +64,7 @@
                   class="sub-menu-items tw-text-xs tw-flex tw-gap-2 tw-capitalize"
                   :class="[
                     subMenu.subItem === subMenuRouteName
-                      ? 'tw-text-primary'
+                      ? 'tw-text-gray-400 tw-font-semibold'
                       : 'tw-text-white',
                   ]"
                 >

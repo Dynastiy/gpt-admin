@@ -1,5 +1,5 @@
 /* BUTTONS  */
-.peppi-btn {
+.gpt-btn {
     border: none;
     padding: 10px 12px;
     font-weight: 400;
@@ -9,7 +9,7 @@
     font-weight: 500;
 }
 
-.peppi-primary {
+.gpt-primary {
     background-color: var(--primary);
     color: var(--white);
 }

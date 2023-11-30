@@ -2,10 +2,11 @@
   <div class="auth-content">
     <div>
       <div class="tw-mb-4">
-        <img src="@/assets/img/peppi-icon.svg" class="tw-h-12 tw-w-12" alt="" />
+        <!-- <img src="@/assets/img/peppi-icon.svg" class="tw-h-12 tw-w-12" alt="" /> -->
+        <span>SAMZUGA GPT</span>
         <h5 class="tw-font-bold tw-text-2xl tw-mb-0">Welcome back,</h5>
-        <small class="tw-text-light tw-text-xs"
-          >Sign in to continue to Peppy Stores administrative panel</small
+        <small class="tw-text-light tw-text-xs tw-block"
+          >Sign in to continue to SamzugaGPT administrative panel</small
         >
       </div>
       <validation-observer v-slot="{ invalid, handleSubmit }">
@@ -83,7 +84,7 @@
 
           <div class="tw-mt-4">
             <button
-              class="peppi-btn peppi-primary w-100"
+              class="gpt-btn gpt-primary w-100"
               v-bind:disabled="invalid"
               :class="{ 'tw-bg-gray-400': invalid }"
             >
@@ -122,11 +123,9 @@ export default {
 
     onSubmit() {
       let credentials = {
-        login: this.credentials.email,
-        password: this.credentials.password,
+        user_email: this.credentials.email,
+        user_password: this.credentials.password,
       };
-      console.log(credentials);
-      // this.$router.push('/analytics')
       this.loginUser(credentials)
     },
   },

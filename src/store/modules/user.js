@@ -8,7 +8,8 @@ import toastify from "toastify-js";
 
 const getDefaultState = () => {
   return {
-    transactions: []
+    transactions: [],
+    loading: false
   };
 };
 
@@ -17,11 +18,17 @@ export default {
   state: getDefaultState(),
   getters: {
     getTransactions: (state) => state.transactions,
+    getLoading: (state) => state.loading
   },
 
   mutations: {
     SET_TRANSACTIONS(state, payload) {
       state.transactions = payload;
+      state.loading = false;
+    },
+
+    SET_LOADING(state, payload) {
+      state.loading = payload;
     },
 
     async LOGOUT(state) {
@@ -39,48 +46,54 @@ export default {
   },
   actions: {
     // List Transactions
-    list({ commit }) {
-    $request.get('/transactions?meta_key=transaction_type_category&meta_value=withdrawal&order=ASC&pageno=1&&metas_to_retrieve=transaction_type_category,balance_before,balance_after,transaction_approval_status')
-    .then((res)=> {
-        console.log(res);
-        commit('SET_TRANSACTIONS', res.data.data)
-    })
-    .catch((err)=>{
-        console.log(err);
-    })
+    list({ commit }, { page, txn_type }) {
+      commit("SET_LOADING", true);
+      $request
+        .get(
+          `/transactions?meta_key=transaction_type_category&meta_value=${txn_type}&order=ASC&pageno=${page}&&metas_to_retrieve=transaction_type_category,balance_before,balance_after,transaction_approval_status`
+        )
+        .then((res) => {
+          console.log(res);
+
+          commit("SET_TRANSACTIONS", res.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+          commit("SET_LOADING", false);
+        });
     },
 
     // Change Status
     updateStatus({ dispatch }, payload) {
-        $middleware.put(`/payments/${payload.txn_id}/${payload.action}`)
-        .then((res)=> {
-            console.log(res);
-            toastify({
-                text: `${res.data.message}`,
-                className: "info",
-                position: "center",
-                style: {
-                  background: "green",
-                  fontSize: "12px",
-                  borderRadius: "5px",
-                },
-              }).showToast();
-            dispatch('list')
+      $middleware
+        .put(`/payments/${payload.id}/${payload.action}`)
+        .then((res) => {
+          console.log(res);
+          toastify({
+            text: `${res.data.message}`,
+            className: "info",
+            position: "center",
+            style: {
+              background: "green",
+              fontSize: "12px",
+              borderRadius: "5px",
+            },
+          }).showToast();
+          dispatch("list");
         })
-        .catch((err)=>{
-            console.log(err);
-            toastify({
-                text: `${err.data.message}`,
-                className: "info",
-                position: "center",
-                style: {
-                  background: "green",
-                  fontSize: "12px",
-                  borderRadius: "5px",
-                },
-              }).showToast();
-        })
-        },
-
+        .catch((err) => {
+          console.log(err);
+          toastify({
+            text: `${err.data.message}`,
+            className: "info",
+            position: "center",
+            style: {
+              background: "red",
+              fontSize: "12px",
+              borderRadius: "5px",
+            },
+          }).showToast();
+        });
+    },
   },
 };
