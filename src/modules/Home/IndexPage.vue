@@ -35,13 +35,13 @@
     </b-skeleton-wrapper>
 
     <div class="tw-bg-white tw-p-4 tw-rounded-lg">
-      <h5 class="tw-font-semibold">Recent Transactions</h5>
+      <h5 class="tw-font-semibold">Recent Pending Withdrawals</h5>
       <table-component
         :items="items"
         :fields="fields"
         :busy="busy"
-        @view="viewOrder"
         :disableEditAction="true"
+        :disableViewAction="true"
         :disableDeleteAction="true"
         :showBaseCount="false"
       >
@@ -49,9 +49,9 @@
           <span
             class="tw-text-xs tw-text-primary tw-underline"
             role="button"
-            @click="$router.push('/transactions')"
+            @click="$router.push('/withdrawals')"
           >
-            View All Transactions
+            View All Withdrawals
           </span>
         </template>
       </table-component>
