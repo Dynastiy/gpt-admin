@@ -14,6 +14,7 @@ const config = {
     apiDomain: process.env.VUE_APP_API_DOMAIN,
     imgUrl: process.env.VUE_APP_IMG_URL,
     middlewareUrl: process.env.VUE_APP_MIDDLEWARE_API_URL,
+    apiMiddleware: process.env.VUE_APP_API_MIDDLEWARE,
     domain: process.env.VUE_APP_DOMAIN,
   
     websocket: process.env.VUE_APP_WEBSOCKETS_SERVER,

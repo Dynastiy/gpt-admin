@@ -65,6 +65,9 @@ import "vue-select/dist/vue-select.css";
 import $request from "@/https/axios"
 Vue.prototype.$request = $request
 
+import $middleware from "@/https/middlewareHelper"
+Vue.prototype.$middleware = $middleware
+
 import toastify from "toastify-js";
 import "toastify-js/src/toastify.css"
 Vue.prototype.$toastify = toastify

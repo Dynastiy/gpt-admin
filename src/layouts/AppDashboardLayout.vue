@@ -73,6 +73,14 @@ export default {
             },
           ],
         },
+
+        {
+          title: "Swap Settings",
+          icon: "ic:sharp-swap-vert",
+          parent: "swap-settings",
+          url: "/swap-settings",
+          hasChildren: false,
+        },
       ],
     };
   },

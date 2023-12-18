@@ -5,6 +5,8 @@ import Withdrawals from "@/modules/Transactions/WithdrawalPage.vue";
 
 import TransactionDetails from "@/modules/Transactions/uuid/_uuid.vue";
 
+import SwapRate from "@/modules/Home/SwapRate.vue";
+
 
 const router = [
   {
@@ -14,6 +16,18 @@ const router = [
     meta: {
       layout: "AppDashboardLayout",
       parent: "analytics",
+      name: "home",
+      requiresAuth: true
+    },
+  },
+
+  {
+    path: "/swap-settings",
+    name: "swap-settings",
+    component: SwapRate,
+    meta: {
+      layout: "AppDashboardLayout",
+      parent: "swap-settings",
       name: "home",
       requiresAuth: true
     },

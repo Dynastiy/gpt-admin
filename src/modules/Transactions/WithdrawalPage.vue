@@ -95,7 +95,6 @@ export default {
     },
 
     filterByStatus(e) {
-      // alert(e);
       this.status = e
       this.getTransactions()
     },
