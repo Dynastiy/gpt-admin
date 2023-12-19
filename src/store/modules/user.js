@@ -50,7 +50,7 @@ export default {
       commit("SET_LOADING", true);
       $request
         .get(
-          `/transactions?meta_key=${meta_key}&meta_value=${txn_type}&order=${order}&pageno=${page}&posts_per_page=${per_page}&&metas_to_retrieve=transaction_type_category,balance_before,balance_after,transaction_approval_status`
+          `/transactions?meta_key=${meta_key}&meta_value=${txn_type}&order=${order}&pageno=${page}&posts_per_page=${per_page}&&metas_to_retrieve=transaction_type_category,balance_before,balance_after,transaction_approval_status,transaction_hash&transaction_owner_user_metas_to_retrieve=_current_user_balance,_user_email,_username,_user_capability,_user_roles,first_name,last_name,eth_crypto_wallet_deposit_address,phone_number,rimplenet_referrer_sponsor,nll_user_email_address_verified,registered_as_community_member`
         )
         .then((res) => {
           console.log(res);

@@ -15,7 +15,8 @@
       :dropdownItem="['approve', 'decline']"
       @approve="updateTxnStatus($event, 'approve')"
       @decline="updateTxnStatus($event, 'decline')"
-      @view="viewTxn"
+      @viewTxn="viewTxn"
+      @viewUser="viewUser"
       :disableEditAction="true"
       :disableDeleteAction="true"
       :disableViewAction="true"
@@ -36,15 +37,25 @@
         </button>
       </div>
     </div>
+
+    <!-- Modal to View Transaction and user Details  -->
+    <details-modal
+      :visible="modal"
+      @toggleClose="toggleClose"
+      :displayKey="displayKey"
+      :data="metaData"
+      :title="title"
+    />
   </div>
 </template>
 
 <script>
 import TableComponent from "@/components/TableComponent.vue";
 import FilterParams from "@/components/Modals/FilterParams.vue";
+import DetailsModal from "@/components/Modals/DetailsModal.vue";
 // import FilterTabs from "@/components/Utils/FilterTabs.vue";
 export default {
-  components: { TableComponent, FilterParams },
+  components: { TableComponent, FilterParams, DetailsModal },
   data() {
     return {
       // items: [],
@@ -55,13 +66,13 @@ export default {
         },
 
         {
-          key: "user_id",
-          label: "User ID",
+          key: "amountEdited",
+          label: "Amount",
         },
 
         {
-          key: "amount_formatted",
-          label: "Amount",
+          key: "fullName",
+          label: "User",
         },
 
         {
@@ -70,43 +81,39 @@ export default {
         },
 
         {
-          key: "transaction_type",
-          label: "Transaction Type",
-        },
-
-        {
           key: "status",
           label: "Status",
         },
 
-        { key: "actions", label: "" },
-        { key: "dots", label: "" },
+        // { key: "actions", label: "Actions" },
+
+        { key: "dots", label: "Actions" },
       ],
       per_page: 10,
       page: 1,
       status: "admin_pending",
       order: "ASC",
+      modal: false,
+      title: "",
+      displayKey: null,
+      metaData: null,
     };
   },
 
   methods: {
-    viewTxn(e) {
-      this.$router.push(`/transaction/${e.transaction_id}`);
-    },
-
     filterByStatus(e) {
-      this.status = e
-      this.getTransactions()
+      this.status = e;
+      this.getTransactions();
     },
 
     filterByOrder(e) {
-      this.order = e
-      this.getTransactions()
+      this.order = e;
+      this.getTransactions();
     },
 
     filterByPerPage(e) {
-      this.per_page = e
-      this.getTransactions()
+      this.per_page = e;
+      this.getTransactions();
     },
 
     getTransactions() {
@@ -118,7 +125,7 @@ export default {
             ? "transaction_type_category"
             : "transaction_approval_status",
         order: this.order,
-        per_page: this.per_page
+        per_page: this.per_page,
       });
     },
 
@@ -133,7 +140,7 @@ export default {
             ? "transaction_type_category"
             : "transaction_approval_status",
         order: this.order,
-        per_page: this.per_page
+        per_page: this.per_page,
       };
       this.$store.dispatch("user/updateStatus", payload);
     },
@@ -144,6 +151,61 @@ export default {
       } else {
         this.page++;
       }
+    },
+
+    viewUser(e) {
+      this.title = "User Data";
+      this.metaData = {
+        full_name:
+          e.transaction_owner_user_metas.first_name +
+          " " +
+          e.transaction_owner_user_metas.last_name,
+        email: e.transaction_owner_user_metas._user_email,
+        user_id: e.transaction_owner_user_metas._user_id,
+        username: e.transaction_owner_user_metas._username,
+        wallet_address:
+          e.transaction_owner_user_metas.eth_crypto_wallet_deposit_address,
+        current_balance:
+          e.transaction_owner_user_metas._current_user_balance_formatted,
+        phone_number: e.transaction_owner_user_metas.phone_number,
+        referred_by: e.transaction_owner_user_metas.rimplenet_referrer_sponsor,
+        registered_as_community_member:
+          e.transaction_owner_user_metas.registered_as_community_member,
+      };
+      this.displayKey = [
+        "full_name",
+        "email",
+        "user_id",
+        "username",
+        "wallet_address",
+        "current_balance",
+        "phone_number",
+        "referred_by",
+        "registered_as_community_member",
+      ];
+      this.modal = true;
+    },
+
+    viewTxn(e) {
+      this.title = "Transaction Data";
+      console.log(e);
+      this.metaData = {
+        balance_before: e.metas.balance_before,
+        balance_after: e.metas.balance_after,
+        transaction_approval_status: e.metas.transaction_approval_status,
+        transaction_hash: e.metas.transaction_hash,
+      };
+      this.displayKey = [
+        "balance_before",
+        "balance_after",
+        "transaction_approval_status",
+        "transaction_hash",
+      ];
+      this.modal = true;
+    },
+
+    toggleClose() {
+      this.modal = false;
     },
   },
 

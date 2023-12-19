@@ -86,7 +86,7 @@ const router = [
       layout: "AppDashboardLayout",
       parent: "transactions",
       header: "Staking Interest",
-      filter: "staking_from_wallet",
+      filter: "staking_interest",
       name: "home",
       subName: "staking-interest",
       requiresAuth: true

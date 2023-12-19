@@ -144,7 +144,9 @@
       <template #cell(user_id)="data">
         <el-popover placement="bottom-end" width="200" trigger="hover">
           <div class="tw-flex tw-flex-col tw-gap-2">
-            <span>Balance Before: {{ data.item.metas.balance_before }} USDT</span>
+            <span
+              >Balance Before: {{ data.item.metas.balance_before }} USDT</span
+            >
             <span>Balance After: {{ data.item.metas.balance_after }} USDT</span>
           </div>
           <span slot="reference" role="button">
@@ -276,16 +278,57 @@
             >
           </template>
         </b-dropdown>
+        <div
+          v-else-if="
+            row.item.metas.transaction_approval_status === 'admin_declined'
+          "
+        >
+          <span></span>
+        </div>
+        <div v-else>
+          <a
+            class="tw-text-xs"
+            :href="'https://bscscan.com/tx/' + row.item.metas.transaction_hash"
+            target="_blank"
+          >
+            Go to BsScan
+          </a>
+        </div>
       </template>
+
+      <template #cell(status_actions)="row">
+        <div>
+          <a
+          v-if="
+              row.item.metas.transaction_type_category === 'blockchain_deposit'
+            "
+            class="tw-text-xs"
+            :href="'https://bscscan.com/tx/' + row.item.request_id"
+            target="_blank"
+          >
+            Go to BsScan
+          </a>
+          <span
+           v-else
+          >
+            {{ (row.item.metas.transaction_type_category).split('_').join(' ') }}
+          </span>
+          
+        </div>
+      </template>
+
       <template #cell(type)="item">
         <slot name="type" :data="item"></slot>
       </template>
+
       <template #cell(uom)="data">
         <span name="uom"> {{ data.item.uom }}</span>
       </template>
+
       <template #cell(reference_range)="item">
         <slot name="reference_range" :data="item"></slot>
       </template>
+
       <template #cell(color)="data">
         <slot name="color" :data="data">
           <div
@@ -298,6 +341,31 @@
       <template #cell(action)="data">
         <slot name="action" :data="data">{{ data.value }}</slot>
       </template>
+
+      <template #cell(fullName)="data">
+        <span role="button" @click="$emit('viewUser', data.item)">{{
+          data.item.transaction_owner_user_metas.first_name === ""
+            ? "no data found"
+            : `${data.item.transaction_owner_user_metas.first_name} ${data.item.transaction_owner_user_metas.last_name}`
+        }}</span>
+      </template>
+
+      <template #cell(amountEdited)="data">
+        <span
+        role="button" @click="$emit('viewTxn', data.item)"
+          :class="
+            data.item.transaction_type === 'DEBIT'
+              ? 'tw-text-red-600'
+              : 'tw-text-green-600'
+          "
+          >{{
+            data.item.transaction_type === "DEBIT"
+              ? `-${data.item.amount_formatted}`
+              : `+${data.item.amount_formatted}`
+          }}</span
+        >
+      </template>
+
       <template #cell(panel)="item">
         <slot name="panel" :data="item"></slot>
       </template>
