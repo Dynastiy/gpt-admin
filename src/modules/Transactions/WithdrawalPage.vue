@@ -47,6 +47,7 @@
       :data="metaData"
       :title="title"
       :isUserVerified="isUserVerified"
+      :txnType="txnType"
     />
   </div>
 </template>
@@ -100,6 +101,7 @@ export default {
       displayKey: null,
       metaData: null,
       isUserVerified: "",
+      txnType: ""
     };
   },
 
@@ -158,7 +160,8 @@ export default {
 
     viewUser(e) {
       this.title = "User Data";
-      this.isUserVerified = e.transaction_owner_user_metas.nll_user_email_address_verified
+      this.isUserVerified =
+        e.transaction_owner_user_metas.nll_user_email_address_verified;
       this.metaData = {
         full_name:
           e.transaction_owner_user_metas.first_name +
@@ -181,7 +184,8 @@ export default {
         "email",
         "user_id",
         "username",
-        "user_deposit_balance",
+        "user_deposit_address",
+        "current_balance",
         "phone_number",
         "referred_by",
         "registered_as_community_member",
@@ -192,21 +196,27 @@ export default {
     viewTxn(e) {
       this.title = "Transaction Data";
       console.log(e);
+      this.txnType = e.transaction_type;
       this.metaData = {
+        amount: e.amount_formatted,
         transaction_id: e.transaction_id,
         request_id: e.request_id,
         balance_before: e.metas.balance_before,
         balance_after: e.metas.balance_after,
         transaction_approval_status: e.metas.transaction_approval_status,
         transaction_hash: e.metas.transaction_hash,
+        withdrawal_address_to:
+          e.metas.transaction_request_withdrawal_address_to,
       };
       this.displayKey = [
-        "transaction_id", 
+        "amount",
+        "transaction_id",
         "request_id",
         "balance_before",
         "balance_after",
         "transaction_approval_status",
         "transaction_hash",
+        "withdrawal_address_to",
       ];
       this.modal = true;
     },

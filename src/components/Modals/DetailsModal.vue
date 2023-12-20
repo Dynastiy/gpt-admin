@@ -4,7 +4,7 @@
       :title="title"
       :visible.sync="dialogVisible"
       :before-close="handleClose"
-      width="30%"
+      width="40%"
     >
       <div class="tw-flex tw-flex-col tw-gap-3">
         <span
@@ -12,11 +12,24 @@
           :key="name"
           class="tw-block tw-border-b tw-border-gray-200 tw-py-1 tw-flex tw-items-center tw-gap-1"
         >
-          <span class="tw-text-gray-600 tw-capitalize tw-break-all"
-            >{{ name.split("_").join(" ") }}:</span
+          <h6
+            class="tw-text-gray-600 tw-capitalize tw-break-all tw-text-wrap tw-text-xs tw-mb-0"
           >
-          <span class="tw-text-dark tw-flex tw-items-center tw-font-semibold tw-break-all">
-            {{ value }}
+            {{ name.split("_").join(" ") }}:
+          </h6>
+          <span
+            class="tw-flex tw-items-center tw-font-semibold tw-break-all"
+            :class="[
+              name === 'amount'
+                ? txnType === 'DEBIT'
+                  ? 'tw-text-red-600'
+                  : 'tw-text-green-600'
+                : 'tw-text-dark',
+            ]"
+          >
+            {{
+              name === "amount" ? (txnType === "DEBIT" ? "-" + value : "+" + value) : value
+            }}
             <span v-if="name === 'email'">
               <i-icon
                 :class="
@@ -56,6 +69,10 @@ export default {
       default: "Details",
     },
     isUserVerified: {
+      type: String,
+      default: "",
+    },
+    txnType: {
       type: String,
       default: "",
     },

@@ -66,6 +66,7 @@
       :data="metaData"
       :title="title"
       :isUserVerified="isUserVerified"
+      :txnType="txnType"
     />
   </div>
 </template>
@@ -140,6 +141,7 @@ export default {
       displayKey: null,
       metaData: null,
       isUserVerified: "",
+      txnType: ""
     };
   },
 
@@ -208,7 +210,9 @@ export default {
     viewTxn(e) {
       this.title = "Transaction Data";
       console.log(e);
+      this.txnType = e.transaction_type;
       this.metaData = {
+        amount: e.amount_formatted,
         transaction_id: e.transaction_id,
         request_id: e.request_id,
         balance_before: e.metas.balance_before,
@@ -217,6 +221,7 @@ export default {
         transaction_hash: e.metas.transaction_hash,
       };
       this.displayKey = [
+        "amount",
         "transaction_id",
         "request_id",
         "balance_before",
