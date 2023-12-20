@@ -343,11 +343,15 @@
       </template>
 
       <template #cell(fullName)="data">
-        <span role="button" @click="$emit('viewUser', data.item)">{{
+        <!-- <span role="button" @click="$emit('viewUser', data.item)">{{
           data.item.transaction_owner_user_metas.first_name === ""
             ? "no data found"
             : `${data.item.transaction_owner_user_metas.first_name} ${data.item.transaction_owner_user_metas.last_name}`
-        }}</span>
+        }}</span> -->
+
+        <span role="button" class="tw-capitalize" @click="$emit('viewUser', data.item)">
+          {{ data.item.transaction_owner_user_metas._username.split("_").join(" ") }}
+        </span>
       </template>
 
       <template #cell(amountEdited)="data">

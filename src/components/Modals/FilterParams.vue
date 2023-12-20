@@ -1,31 +1,33 @@
 <template>
-  <div class="lg:tw-w-2/12 md:tw-w-3/12">
+  <div class="">
     <el-popover placement="bottom-end" width="300" trigger="click">
       <template>
         <div>
-          <h6
-            class="tw-text-xs tw-text-white tw-p-2 tw-rounded-[4px] tw-font-medium tw-bg-primary"
-          >
-            Approval Status
-          </h6>
-
-          <div class="tw-flex tw-flex-col tw-gap-2">
-            <span
-              class="tw-flex tw-items-center tw-gap-2"
-              v-for="(item, idx) in approval_status"
-              :key="idx"
+          <div class="approval-filter" v-if="approval_filter">
+            <h6
+              class="tw-text-xs tw-text-white tw-p-2 tw-rounded-[4px] tw-font-medium tw-bg-primary"
             >
-              <input
-                type="radio"
-                class="tw-w-fit tw-accent-primary"
-                v-model="status"
-                :value="item.value"
-                @change="filterByStatus"
-                :name="item.label"
-                id=""
-              />
-              <span class="tw-text-xs">{{ item.label }}</span>
-            </span>
+              Approval Status
+            </h6>
+
+            <div class="tw-flex tw-flex-col tw-gap-2">
+              <span
+                class="tw-flex tw-items-center tw-gap-2"
+                v-for="(item, idx) in approval_status"
+                :key="idx"
+              >
+                <input
+                  type="radio"
+                  class="tw-w-fit tw-accent-primary"
+                  v-model="status"
+                  :value="item.value"
+                  @change="filterByStatus"
+                  :name="item.label"
+                  id=""
+                />
+                <span class="tw-text-xs">{{ item.label }}</span>
+              </span>
+            </div>
           </div>
           <h6
             class="tw-text-xs tw-text-white tw-p-2 tw-rounded-[4px] tw-font-medium tw-bg-primary tw-mt-2"
@@ -92,6 +94,12 @@
 
 <script>
 export default {
+  props: {
+    approval_filter: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       approval_status: [
@@ -114,17 +122,17 @@ export default {
       ],
       orders: [
         {
-          label: "Ascending",
-          value: "ASC",
-        },
-        {
           label: "Descending",
           value: "DESC",
+        },
+        {
+          label: "Ascending",
+          value: "ASC",
         },
       ],
       value: 1,
       status: "admin_pending",
-      order: "ASC",
+      order: "DESC",
       per_page: 10,
     };
   },
@@ -139,7 +147,7 @@ export default {
     },
 
     filterByPerPage() {
-      this.$emit("filterByPerPage", this.page);
+      this.$emit("filterByPerPage", this.per_page);
     },
   },
 
@@ -151,9 +159,7 @@ export default {
     },
   },
 
-  computed: {
-
-  }
+  computed: {},
 };
 </script>
 

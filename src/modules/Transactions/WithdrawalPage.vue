@@ -6,6 +6,7 @@
         @filterByStatus="filterByStatus($event)"
         @filterByOrder="filterByOrder($event)"
         @filterByPerPage="filterByPerPage($event)"
+        :approval_filter="true"
       />
     </div>
     <table-component
@@ -45,6 +46,7 @@
       :displayKey="displayKey"
       :data="metaData"
       :title="title"
+      :isUserVerified="isUserVerified"
     />
   </div>
 </template>
@@ -92,11 +94,12 @@ export default {
       per_page: 10,
       page: 1,
       status: "admin_pending",
-      order: "ASC",
+      order: "DESC",
       modal: false,
       title: "",
       displayKey: null,
       metaData: null,
+      isUserVerified: "",
     };
   },
 
@@ -155,6 +158,7 @@ export default {
 
     viewUser(e) {
       this.title = "User Data";
+      this.isUserVerified = e.transaction_owner_user_metas.nll_user_email_address_verified
       this.metaData = {
         full_name:
           e.transaction_owner_user_metas.first_name +
@@ -163,7 +167,7 @@ export default {
         email: e.transaction_owner_user_metas._user_email,
         user_id: e.transaction_owner_user_metas._user_id,
         username: e.transaction_owner_user_metas._username,
-        wallet_address:
+        user_deposit_address:
           e.transaction_owner_user_metas.eth_crypto_wallet_deposit_address,
         current_balance:
           e.transaction_owner_user_metas._current_user_balance_formatted,
@@ -177,8 +181,7 @@ export default {
         "email",
         "user_id",
         "username",
-        "wallet_address",
-        "current_balance",
+        "user_deposit_balance",
         "phone_number",
         "referred_by",
         "registered_as_community_member",
@@ -190,12 +193,16 @@ export default {
       this.title = "Transaction Data";
       console.log(e);
       this.metaData = {
+        transaction_id: e.transaction_id,
+        request_id: e.request_id,
         balance_before: e.metas.balance_before,
         balance_after: e.metas.balance_after,
         transaction_approval_status: e.metas.transaction_approval_status,
         transaction_hash: e.metas.transaction_hash,
       };
       this.displayKey = [
+        "transaction_id", 
+        "request_id",
         "balance_before",
         "balance_after",
         "transaction_approval_status",
