@@ -163,6 +163,10 @@ export default {
           wallet_name: "SZCB Main",
         },
         {
+          wallet_id: "bnb",
+          wallet_name: "BNB",
+        },
+        {
           wallet_id: "usdt",
           wallet_name: "USDT Main",
         },
@@ -193,7 +197,7 @@ export default {
         rate: "",
       },
       error: null,
-      busy: false
+      busy: false,
     };
   },
   methods: {
@@ -208,23 +212,21 @@ export default {
       this.dialogVisible = !this.dialogVisible;
     },
 
-    onSubmit(){
+    onSubmit() {
       let payload = {
         maximum_quantity_to_swap: Number(this.dataObj.maximum_quantity_to_swap),
         rate: Number(this.dataObj.rate),
         from: this.rate.from,
-        to: this.rate.to
+        to: this.rate.to,
       };
       this.busy = true;
       this.$middleware
-        .post(
-          `swap-rate-settings`, payload
-        )
+        .post(`swap-rate-settings`, payload)
         .then((res) => {
           console.log(res.data, "hmmm");
           this.busy = false;
-          this.dialogVisible = !this.dialogVisible
-          this.swapRate()
+          this.dialogVisible = !this.dialogVisible;
+          this.swapRate();
           // this.rate = res.data.data;
         })
         .catch((err) => {
@@ -250,7 +252,7 @@ export default {
         });
     },
 
-    getBulkRates(){
+    getBulkRates() {
       this.$middleware
         .get(
           `conversion-rate?from=usdt&to=szcb,from=szcb_referral_bonus&to=szcb`
@@ -262,11 +264,11 @@ export default {
           this.loading = false;
           console.log(err, "ommmo");
         });
-    }
+    },
   },
 
   beforeMount() {
-    this.getBulkRates()
+    this.getBulkRates();
   },
 
   watch: {
@@ -280,6 +282,8 @@ export default {
           value = this.currencies.filter(
             (item) => item.wallet_id === "szcb" || item.wallet_id === "usdt"
           );
+        } else if (val.wallet_id === "bnb") {
+          value = this.currencies.filter((item) => item.wallet_id === "usdt");
         } else if (val.wallet_id === "szcb_referral_bonus") {
           value = this.currencies.filter((item) => item.wallet_id === "szcb");
         } else if (val.wallet_id === "usdt_interest") {
