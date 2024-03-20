@@ -164,7 +164,7 @@ export default {
         },
         {
           wallet_id: "bnb",
-          wallet_name: "BNB",
+          wallet_name: "BNB Main",
         },
         {
           wallet_id: "usdt",
@@ -283,7 +283,7 @@ export default {
             (item) => item.wallet_id === "szcb" || item.wallet_id === "usdt"
           );
         } else if (val.wallet_id === "bnb") {
-          value = this.currencies.filter((item) => item.wallet_id === "usdt");
+          value = this.currencies.filter((item) => item.wallet_id === "szcb");
         } else if (val.wallet_id === "szcb_referral_bonus") {
           value = this.currencies.filter((item) => item.wallet_id === "szcb");
         } else if (val.wallet_id === "usdt_interest") {
