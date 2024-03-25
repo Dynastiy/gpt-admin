@@ -2,12 +2,12 @@
 /* src/axios.js */
 // import Cookies from "js-cookie";
 import axios from "axios";
-import config from "./config";
+// import config from "./config";
 
 // import router from "./router";
 
 const $axios = axios.create({
-  baseURL: config.middlewareUrl, // Set api base url from .env
+  baseURL: "https://middleware-rimplenet-general.samzugagpt.com/", // Set api base url from .env
   // timeout: 30000, // default is `0` millisecods (no timeout)
   headers: {
     // Accept: "application/json",

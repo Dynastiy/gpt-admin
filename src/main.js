@@ -65,6 +65,10 @@ import "vue-select/dist/vue-select.css";
 import $request from "@/https/axios"
 Vue.prototype.$request = $request
 
+import axios from "axios"
+Vue.prototype.$axios = axios
+
+
 import $middleware from "@/https/middlewareHelper"
 Vue.prototype.$middleware = $middleware
 

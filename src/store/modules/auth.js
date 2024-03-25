@@ -131,7 +131,7 @@ export default {
             borderRadius: "5px",
           },
         }).showToast();
-
+        commit("SET_USER", responsePayload.data);
         router.push("/");
         // Check redirect URL
 

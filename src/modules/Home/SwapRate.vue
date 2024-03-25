@@ -1,6 +1,9 @@
 <template>
   <div>
     <div class="tw-flex tw-flex-col tw-gap-6">
+      <!-- <div>
+        {{ user }}
+      </div> -->
       <div class="tw-bg-white tw-p-8 tw-rounded-lg">
         <h4 class="tw-font-bold tw-mb-5">Swap Settings</h4>
         <div class="tw-flex tw-flex-col tw-gap-4">
@@ -117,7 +120,7 @@
                   name="Maximum Quantity to Swap"
                   v-slot="{ dirty, invalid, errors }"
                 >
-                  <label for="mxn">Maximum Quantity to Swap</label>
+                  <label for="mxn">Quantity to Add</label>
                   <input
                     :class="{
                       'tw-text-red-600': dirty && invalid,
@@ -196,6 +199,7 @@ export default {
         maximum_quantity_to_swap: "",
         rate: "",
       },
+      requestId: "",
       error: null,
       busy: false,
     };
@@ -213,15 +217,26 @@ export default {
     },
 
     onSubmit() {
+      var token = localStorage.getItem('token')
+      const headers = {
+        Authorization: `Bearer ${token}`
+      }
+      console.log(this.rate);
       let payload = {
-        maximum_quantity_to_swap: Number(this.dataObj.maximum_quantity_to_swap),
-        rate: Number(this.dataObj.rate),
-        from: this.rate.from,
-        to: this.rate.to,
+        request_id: this.requestId,
+        user_id: this.user.user_id,
+        // maximum_quantity_to_swap: Number(this.dataObj.maximum_quantity_to_swap),
+        swap_rate: Number(this.dataObj.rate),
+        wallet_id_from: this.rate.wallet_id_from,
+        wallet_id_to: this.rate.wallet_id_to,
+        swap_quantity_to_add: Number(this.dataObj.maximum_quantity_to_swap),
+        swap_minimum_quantity_per_request: 5,
+        swap_maximum_quantity_per_request: 100,
+        swap_user_id_to_debit_for_funding: 1,
       };
       this.busy = true;
-      this.$middleware
-        .post(`swap-rate-settings`, payload)
+      this.$axios
+        .put(`https://middleware-rimplenet-general.samzugagpt.com/swap/rate-setting`, payload, { headers})
         .then((res) => {
           console.log(res.data, "hmmm");
           this.busy = false;
@@ -237,9 +252,14 @@ export default {
 
     swapRate() {
       this.loading = true;
-      this.$middleware
+      var token = localStorage.getItem('token')
+      const headers = {
+        Authorization: `Bearer ${token}`
+      }
+      this.$axios
         .get(
-          `conversion-rate?from=${this.selected.wallet_id}&to=${this.selected2.wallet_id}`
+          `https://middleware-rimplenet-general.samzugagpt.com/swap/conversion-rate?wallet_id_from=${this.selected.wallet_id}&wallet_id_to=${this.selected2.wallet_id}&user_id=${this.user.user_id}`,
+          { headers }
         )
         .then((res) => {
           console.log(res.data.data, "hmmm");
@@ -253,9 +273,14 @@ export default {
     },
 
     getBulkRates() {
-      this.$middleware
+      var token = localStorage.getItem('token')
+      const headers = {
+        Authorization: `Bearer ${token}`
+      }
+      this.$axios
         .get(
-          `conversion-rate?from=usdt&to=szcb,from=szcb_referral_bonus&to=szcb`
+          `https://middleware-rimplenet-general.samzugagpt.com/swap/conversion-rate?wallet_id_from=${this.selected.wallet_id}&wallet_id_to=${this.selected2.wallet_id}&user_id=${this.user.user_id}`,
+          { headers }
         )
         .then((res) => {
           console.log(res.data.data, "testing");
@@ -269,6 +294,8 @@ export default {
 
   beforeMount() {
     this.getBulkRates();
+    var result = Math.round(+new Date() / 1000);
+    this.requestId = `${result}`;
   },
 
   watch: {
@@ -313,9 +340,9 @@ export default {
   computed: {
     swapValues() {
       let value = {
-        key: this.rate.key,
-        current_rate: this.rate.rate,
-        remaining_quantity: this.rate.rmn,
+        key: this.rate.swap_rate_key,
+        current_rate: this.rate.swap_rate,
+        remaining_quantity: this.rate.swap_total_quantity_available,
       };
       return pick(value, this.displayKey);
     },
@@ -324,6 +351,10 @@ export default {
       var value = this.currencies.filter((item) => item.wallet_id !== "szcb");
       return value;
     },
+
+    user(){
+      return this.$store.getters['auth/getUser']
+    }
   },
 };
 </script>
