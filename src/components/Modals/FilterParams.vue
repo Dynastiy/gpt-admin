@@ -108,16 +108,16 @@ export default {
           value: "",
         },
         {
-          label: "Admin Pending",
-          value: "admin_pending",
+          label: "Pending",
+          value: "pending",
         },
         {
-          label: "Admin Approved",
-          value: "admin_approved",
+          label: "Approved",
+          value: "approved",
         },
         {
-          label: "Admin Declined",
-          value: "admin_declined",
+          label: "Declined",
+          value: "declined",
         },
       ],
       orders: [

@@ -9,7 +9,7 @@ import toastify from "toastify-js";
 const getDefaultState = () => {
   return {
     transactions: [],
-    loading: false
+    loading: false,
   };
 };
 
@@ -18,7 +18,7 @@ export default {
   state: getDefaultState(),
   getters: {
     getTransactions: (state) => state.transactions,
-    getLoading: (state) => state.loading
+    getLoading: (state) => state.loading,
   },
 
   mutations: {
@@ -50,7 +50,7 @@ export default {
       commit("SET_LOADING", true);
       $request
         .get(
-          `/transactions?meta_key=${meta_key}&meta_value=${txn_type}&order=${order}&pageno=${page}&posts_per_page=${per_page}&&metas_to_retrieve=transaction_type_category,balance_before,balance_after,transaction_approval_status,transaction_hash,transaction_request_withdrawal_address_to&transaction_owner_user_metas_to_retrieve=_current_user_balance,_user_email,_username,_user_capability,_user_roles,first_name,last_name,eth_crypto_wallet_deposit_address,phone_number,rimplenet_referrer_sponsor,nll_user_email_address_verified,registered_as_community_member`
+          `/transactions?meta_key=${meta_key}&meta_value=${txn_type}&order=${order}&page_no=${page}&posts_per_page=${per_page}&&metas_to_retrieve=transaction_type_category,balance_before,balance_after,transaction_approval_status,transaction_hash,transaction_request_withdrawal_address_to&transaction_owner_user_metas_to_retrieve=_current_user_balance,_user_email,_username,_user_capability,_user_roles,first_name,last_name,eth_crypto_wallet_deposit_address,phone_number,rimplenet_referrer_sponsor,nll_user_email_address_verified,registered_as_community_member`
         )
         .then((res) => {
           console.log(res);
@@ -64,8 +64,11 @@ export default {
 
     // Change Status
     updateStatus({ dispatch }, payload) {
+      let approveUrl = `cryptocurrency/bscscan/withdrawal/usdt/approve/${payload.txn_id}`;
+      let declineUrl = `withdrawal/decline/${payload.txn_id}`;
+      let url = payload.action === "decline" ? declineUrl : approveUrl;
       $middleware
-        .put(`/payments/${payload.id}/${payload.action}`)
+        .put(url, payload.formData)
         .then((res) => {
           console.log(res);
           toastify({
@@ -78,7 +81,13 @@ export default {
               borderRadius: "5px",
             },
           }).showToast();
-          dispatch("list", { page: payload.page, txn_type: payload.txn_type });
+          dispatch("list", {
+            page: payload.page,
+            txn_type: payload.txn_type,
+            meta_key: payload.meta_key,
+            per_page: payload.per_page,
+            order: payload.order,
+          });
         })
         .catch((err) => {
           console.log(err);

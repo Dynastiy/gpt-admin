@@ -94,7 +94,7 @@ export default {
       ],
       per_page: 10,
       page: 1,
-      status: "admin_pending",
+      status: "pending",
       order: "DESC",
       modal: false,
       title: "",
@@ -137,7 +137,10 @@ export default {
     updateTxnStatus(e, value) {
       let payload = {
         action: value,
-        id: e.transaction_id,
+        txn_id: e.transaction_id,
+        formData: {
+          user_id_performing_request: this.user.user_id
+        },
         page: this.page,
         txn_type: this.status === "" ? this.txn_type : this.status,
         meta_key:
@@ -246,6 +249,10 @@ export default {
 
     busy() {
       return this.$store.getters["user/getLoading"];
+    },
+
+    user() {
+      return this.$store.getters["auth/getUser"];
     },
 
     txn_type() {

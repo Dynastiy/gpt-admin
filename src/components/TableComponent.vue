@@ -254,7 +254,7 @@
           variant="link"
           toggle-class="text-decoration-none tw-text-dark100"
           no-caret
-          v-if="row.item.metas.transaction_approval_status === 'admin_pending'"
+          v-if="row.item.metas.transaction_approval_status === 'pending'"
         >
           <!-- <b-dropdown
           variant="link"
@@ -280,7 +280,7 @@
         </b-dropdown>
         <div
           v-else-if="
-            row.item.metas.transaction_approval_status === 'admin_declined'
+            row.item.metas.transaction_approval_status === 'declined'
           "
         >
           <span></span>

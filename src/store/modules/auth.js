@@ -134,7 +134,6 @@ export default {
         commit("SET_USER", responsePayload.data);
         router.push("/");
         // Check redirect URL
-
         return res;
       } catch (error) {
         if (error.data) {

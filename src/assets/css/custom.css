@@ -243,7 +243,7 @@ form label {
 .admin_banned,
 .admin_out-of-stock,
 .admin_not-registered,
-.admin_inactive {
+.admin_inactive, .declined {
     background-color: red;
 }
 
