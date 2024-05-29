@@ -11,7 +11,7 @@
             <label for="" class="tw-text-sm tw-font-medium tw-text-gray-500"
               >Currency From:</label
             >
-            <select name="" v-model="selected" id="" class="tw-py-2">
+            <select name="" v-model="selected" id="" class="tw-py-2 tw-text-[14px]">
               <option value="" selected disabled>
                 --Select Currency from--
               </option>
@@ -33,7 +33,7 @@
               v-model="selected2"
               name=""
               id=""
-              class="tw-py-2"
+              class="tw-py-2 tw-text-[14px]"
               @change="swapRate"
             >
               <option value="" selected disabled>--Select Currency to--</option>
@@ -313,7 +313,7 @@ export default {
           value = this.currencies.filter((item) => item.wallet_id === "szcb");
         } else if (val.wallet_id === "szcb_referral_bonus") {
           value = this.currencies.filter((item) => item.wallet_id === "szcb");
-        } else if (val.wallet_id === "usdt_interest") {
+        } else if (val.wallet_id === "usdt_staking_interest") {
           value = this.currencies.filter(
             (item) => item.wallet_id === "szcb" || item.wallet_id === "usdt"
           );
