@@ -182,8 +182,8 @@ export default {
           wallet_name: "USDT Referral Bonus",
         },
         {
-          wallet_id: "usdt_interest",
-          wallet_name: "USDT Interest",
+          wallet_id: "usdt_staking_interest",
+          wallet_name: "USDT Staking Interest",
         },
       ],
       selected: {},
