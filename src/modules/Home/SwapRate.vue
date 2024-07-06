@@ -182,6 +182,10 @@ export default {
           wallet_name: "USDT Referral Bonus",
         },
         {
+          wallet_id: "bnb_referral_bonus",
+          wallet_name: "BNB Referral Bonus",
+        },
+        {
           wallet_id: "usdt_staking_interest",
           wallet_name: "USDT Staking Interest",
         },
@@ -311,7 +315,11 @@ export default {
           );
         } else if (val.wallet_id === "bnb") {
           value = this.currencies.filter((item) => item.wallet_id === "szcb");
-        } else if (val.wallet_id === "szcb_referral_bonus") {
+        }
+        else if (val.wallet_id === "bnb_referral_bonus") {
+          value = this.currencies.filter((item) => item.wallet_id === "bnb" || item.wallet_id === "szcb");
+        } 
+        else if (val.wallet_id === "szcb_referral_bonus") {
           value = this.currencies.filter((item) => item.wallet_id === "szcb");
         } else if (val.wallet_id === "usdt_staking_interest") {
           value = this.currencies.filter(
